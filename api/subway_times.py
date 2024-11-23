@@ -1,6 +1,6 @@
 import json
 from urllib.parse import parse_qs
-from nearby_times import get_nearest_station_trains
+from .nearby_times import get_nearest_station_trains
 
 def handler(event, context):
     """

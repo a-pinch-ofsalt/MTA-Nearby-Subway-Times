@@ -1,6 +1,6 @@
 import json
-from nearest_stations import get_closest_stations, load_stations
-from stop_times import get_train_info
+from .nearest_stations import get_closest_stations, load_stations
+from .stop_times import get_train_info
 
 def get_nearest_station_trains(lat, lon, stations_file, num_stations=10):
     """
