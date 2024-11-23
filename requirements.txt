@@ -1,2 +1,1 @@
 nyct-gtfs
-urllib
