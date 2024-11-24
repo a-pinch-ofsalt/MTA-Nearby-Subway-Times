@@ -8,46 +8,38 @@ def handler(event, context):
     Accepts GET requests with required query parameters: latitude and longitude.
     Optional: num_stations (default: 10).
     """
-    try:
-        # Parse query parameters
-        query = parse_qs(event.get("queryStringParameters", ""))
-        lat = query.get("latitude")
-        lon = query.get("longitude")
+    
+    # Parse query parameters
+    query = parse_qs(event.get("queryStringParameters", ""))
+    lat = query.get("latitude")
+    lon = query.get("longitude")
 
-        # Validate required parameters
-        if not lat or not lon:
-            return {
-                "statusCode": 400,
-                "headers": {
-                    "Content-Type": "application/json"
-                },
-                "body": json.dumps({
-                    "error": "Missing required query parameters: latitude and longitude"
-                })
-            }
-
-        # Convert to appropriate types
-        lat = float(lat[0])
-        lon = float(lon[0])
-        num_stations = int(query.get("num_stations", [10])[0])  # Default: 10 stations
-
-        # File path for the station data
-        stations_file = "api/mta-subway-stations-stops.json"
-
-        # Fetch nearest station times
-        result = get_nearest_station_trains(lat, lon, stations_file, num_stations)
+    # Validate required parameters
+    if not lat or not lon:
         return {
-            "statusCode": 200,
+            "statusCode": 400,
             "headers": {
                 "Content-Type": "application/json"
             },
-            "body": json.dumps(result)
+            "body": json.dumps({
+                "error": "Missing required query parameters: latitude and longitude"
+            })
         }
-    except Exception as e:
-        return {
-            "statusCode": 500,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps({"error": str(e)})
-        }
+
+    # Convert to appropriate types
+    lat = float(lat[0])
+    lon = float(lon[0])
+    num_stations = int(query.get("num_stations", [10])[0])  # Default: 10 stations
+
+    # File path for the station data
+    stations_file = "api/mta-subway-stations-stops.json"
+
+    # Fetch nearest station times
+    result = get_nearest_station_trains(lat, lon, stations_file, num_stations)
+    return {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": json.dumps(result)
+    }

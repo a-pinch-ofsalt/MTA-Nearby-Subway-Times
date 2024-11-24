@@ -1,16 +1,15 @@
 {
-    "version": 2,
-    "builds": [
+  "version": 2,
+  "builds": [
       {
-        "src": "api/subway_times.py",
-        "use": "@vercel/python"
+          "src": "api/index.py",
+          "use": "@vercel/python"
       }
-    ],
-    "routes": [
+  ],
+  "routes": [
       {
-        "src": "/api/subway_times",
-        "dest": "api/subway_times.py"
+          "src": "/api/subway_times",
+          "dest": "api/index.py"
       }
-    ]
-  }
-  
+  ]
+}
